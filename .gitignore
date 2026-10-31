@@ -1,0 +1,16 @@
+# Dependências (são reinstaladas com npm install)
+node_modules/
+
+# Variáveis de ambiente e credenciais
+.env
+.env.*
+
+# Logs e relatórios
+npm-debug.log*
+coverage/
+
+# Arquivos do sistema/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
