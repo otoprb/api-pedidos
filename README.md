@@ -282,10 +282,10 @@ Prints do Postman na pasta [`evidencias/`](evidencias/):
 
 ## Uso de IA
 
-> **[APAGUE ESTE AVISO]** Preencha esta seção com o que você realmente fez. O enunciado exige que ela seja verdadeira, e o professor pode perguntar sobre ela.
+## Uso de IA
 
-- **Utilizei IA?** [Sim/Não. Se sim, qual: ex. Claude, da Anthropic]
-- **Para quais tarefas:** [ex.: gerar a estrutura inicial do projeto, sugerir as validações, escrever testes, revisar o README...]
-- **O que fiz por conta própria:** [ex.: rodei e testei todos os endpoints no Postman, conferi cada validação, ajustei X...]
-- **Sugestão aceita, modificada ou rejeitada (pelo menos uma), com justificativa:**
-  - [Descreva a sugestão, o que você decidiu e por quê.]
+- **Utilizei IA?** Sim. Usei o Claude (Anthropic) e, durante os testes, o assistente de IA do próprio Postman.
+- **Para quais tarefas:** o Claude gerou o código inicial da API (camadas, validações e tratamento de erros), os testes automatizados, o README e a coleção do Postman, e me guiou passo a passo na montagem do projeto.
+- **O que fiz por conta própria:** montei o projeto no meu computador em etapas, com um commit por etapa; testei o service no Node antes de criar as rotas; rodei os testes (75 passando); criei o repositório no GitHub; executei as requisições no Postman e tirei os prints das evidências. Também corrigi problemas durante o processo, como arquivos copiados na pasta errada e um comando digitado por engano dentro do app.js (desfeito com git restore).
+- **Sugestão rejeitada:** ao enviar a requisição de pedido inválido no Postman, a IA do Postman sugeriu "consertar" o corpo da requisição adicionando os campos corretos (botão Fix). Rejeitei, porque o objetivo daquele teste era justamente enviar dados inválidos e comprovar que a API responde 400 com as mensagens de validação.
+- **Sugestão aceita:** o Claude propôs responder 400 quando a transição de status não é permitida (ex.: de "recebido" direto para "entregue"). Mantive porque o enunciado define 400 para dados inválidos no PATCH e não menciona outros códigos, como 409.
