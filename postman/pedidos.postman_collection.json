@@ -1,0 +1,323 @@
+{
+  "info": {
+    "name": "API de Gerenciamento de Pedidos",
+    "description": "Requisições para testar a API manualmente e gerar as evidências da pasta evidencias/. Rode na ordem (01 a 08) com a API recém-iniciada (npm start), para que o pedido criado tenha id 1. As URLs usam http://localhost:3000; se rodar em outra porta, ajuste-as.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01 - Criar pedido válido (201)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 201', () => pm.response.to.have.status(201));",
+              "pm.test('Pedido nasce como recebido', () => pm.expect(pm.response.json().status).to.eql('recebido'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"cliente\": \"Carlos Silva\",\n  \"tipo\": \"entrega\",\n  \"valor\": 350,\n  \"prioridade\": \"normal\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/pedidos",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "pedidos"
+          ],
+          "protocol": "http",
+          "port": "3000"
+        }
+      }
+    },
+    {
+      "name": "02 - Criar pedido inválido (400)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 400', () => pm.response.to.have.status(400));",
+              "pm.test('Mensagem de erro em JSON', () => pm.expect(pm.response.json()).to.have.property('erro'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"cliente\": \"   \",\n  \"tipo\": \"entrega\",\n  \"valor\": -50,\n  \"prioridade\": \"urgentissima\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/pedidos",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "pedidos"
+          ],
+          "protocol": "http",
+          "port": "3000"
+        }
+      }
+    },
+    {
+      "name": "03 - Listar pedidos (200)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Resposta é uma lista', () => pm.expect(pm.response.json()).to.be.an('array'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/pedidos",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "pedidos"
+          ],
+          "protocol": "http",
+          "port": "3000"
+        }
+      }
+    },
+    {
+      "name": "04 - Consultar pedido inexistente (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/pedidos/999",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "pedidos",
+            "999"
+          ],
+          "protocol": "http",
+          "port": "3000"
+        }
+      }
+    },
+    {
+      "name": "05 - Atualizar status válido (200)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Status atualizado', () => pm.expect(pm.response.json().status).to.eql('em_preparacao'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"em_preparacao\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/pedidos/1/status",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "pedidos",
+            "1",
+            "status"
+          ],
+          "protocol": "http",
+          "port": "3000"
+        }
+      }
+    },
+    {
+      "name": "06 - Consultar pedido existente (200)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/pedidos/1",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "pedidos",
+            "1"
+          ],
+          "protocol": "http",
+          "port": "3000"
+        }
+      }
+    },
+    {
+      "name": "07 - Transição de status inválida (400)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"recebido\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/pedidos/1/status",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "pedidos",
+            "1",
+            "status"
+          ],
+          "protocol": "http",
+          "port": "3000"
+        }
+      }
+    },
+    {
+      "name": "08 - Atualizar status de ID inexistente (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"cancelado\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/pedidos/999/status",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "pedidos",
+            "999",
+            "status"
+          ],
+          "protocol": "http",
+          "port": "3000"
+        }
+      }
+    }
+  ]
+}
