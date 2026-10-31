@@ -22,7 +22,7 @@ Os pedidos ficam **armazenados em memória** (não há banco de dados). Ao reini
 
 ```bash
 # 1. Clonar o repositório
-git clone [URL DO SEU REPOSITÓRIO]
+git clone https://github.com/otoprb/api-pedidos.git
 cd api-pedidos
 
 # 2. Instalar as dependências
